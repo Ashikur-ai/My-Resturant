@@ -54,7 +54,16 @@
             password = '$password'
         ";
 
-        
+        $res = mysqli_query($conn, $sql) or die(mysqli_error());
+
+        // Check whether the data is inserted or not and display appropriate message
+        if($res == TRUE)
+        {
+            echo "Data Inserted";
+        }
+        else{
+            echo "Failed to Insert Data";
+        }
         
     }
     
