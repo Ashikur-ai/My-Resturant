@@ -4,6 +4,13 @@
     <div class="wrapper">
         <h1>Add Admin</h1>
         <br><br>
+        <?php 
+            if(isset($_SESSION['add'])) //checking the session 
+            {
+                echo $_SESSION['add'];//Display the session message
+                unset($_SESSION['add']);//Removing session message
+            }
+        ?>
         <form action="" method="POST">
 
             <table class="tbl-30">
@@ -46,7 +53,7 @@
 
         $full_name = $_POST['full_name'];
         $username = $_POST['username'];
-        $password = md5($_POST['password']); //Password encryption using md5
+        $password = $_POST['password']; //Password encryption using md5
         
         $sql = "INSERT INTO tbl_admin SET
             full_name = '$full_name',
@@ -59,10 +66,18 @@
         // Check whether the data is inserted or not and display appropriate message
         if($res == TRUE)
         {
-            echo "Data Inserted";
+            //Data inserted
+            //Create a session variable to display message
+            $_SESSION['add'] = "Admin added successfully";
+            //Redirect page to manage admin
+            header("location:".SITEURL.'admin/manage-admin.php');
         }
         else{
-            echo "Failed to Insert Data";
+            //Failed to insert data
+            // Create session variable to display
+            $_SESSION['add'] = "Failed to Add Admin";
+            //Redirect page to add admin
+            header("location:".SITEURL.'admin/add-admin.php');
         }
         
     }
